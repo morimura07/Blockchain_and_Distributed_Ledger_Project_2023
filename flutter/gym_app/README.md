@@ -1,16 +1,14 @@
-# gym_app
+# Gym App
 
-A new Flutter project.
+Here the details about the repository.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Code about blockchain
+Requires:
+- installation of truffle
+- The contracts from openzeppelin `npm install @openzeppelin/contracts`
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Folders:
+- contracts/: Contains smart contract code.
+- migrations/: Contains migrations scripts which will be used be truffle to handle deployment.
+- test/: Contains test scripts truffle-config.js: Contains truffle configurations

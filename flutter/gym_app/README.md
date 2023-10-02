@@ -5,8 +5,8 @@ Here the details about the repository.
 
 ## Code about blockchain
 Requires:
-- installation of truffle
-- The contracts from openzeppelin `npm install @openzeppelin/contracts`
+- [installation of truffle](https://trufflesuite.com/docs/truffle/how-to/install/)
+- The contracts from openzeppelin, it means it's needed the run of: `npm install @openzeppelin/contracts`
 
 Folders:
 - contracts/: Contains smart contract code.

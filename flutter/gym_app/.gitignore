@@ -43,5 +43,11 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# ignoring node_modules
+# ignoring node_modules, installed with npm
 node_modules
+
+# ignoring the artifacts, the result of the compilation of the smart contracts
+src/artifacts
+
+# ignoring the contracts from openzeppelin
+@openzeppelin

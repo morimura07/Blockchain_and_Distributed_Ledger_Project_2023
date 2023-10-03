@@ -4,23 +4,21 @@ Here the details about the repository.
 
 
 ## Code about blockchain
-To set-up this project I used the [truffle suite](https://trufflesuite.com), it means I installed truffle (with all the problem that it come with it, read below to know more)
+To set-up this project I used the [truffle suite](https://trufflesuite.com).
 
 Unforutnately, I encountered quite a lot of problems on the road for compiling and deploying the Smart Contracts. \
-Therefore, I report down here the solutions that I found on my own to make the things work, it could be that if you follow the official guide it will all work properly for you but, in my case, maybe for some dependency conflic in my environment, the compiling and the deploying weren't working properly.
+Therefore, I reported down here the procedure that I found on my own to make the things work, it could be that if you follow the official guide it will work properly but, in my case, maybe for some dependency conflic in my environment, it's been complex.
 
 ### Installation procedure
 - [installation of truffle](https://trufflesuite.com/docs/truffle/how-to/install/); I am using MacOS and the problem of this installation got me stuck for a while.
   
-  I wasn't able to install the truffle package
-  immediately because it would have required the run `sudo` command, which is ***not recommended*** by the guide that I just liked above here. \
-  At the end of the day, to make the things work, I had to install locally the package, using `npm install truffle` (without the `-g` flag) and, in order to use the truffle command from the command line, I used `./node_modules/.bin/truffle <command>` instead of just `truffle <command>`.
+  I wasn't able to install the truffle package immediately, because it would have required the run `sudo` command, which is ***not recommended*** by the guide that I just liked above here. \
+  As a solution, I had to install locally the package, using `npm install truffle` (without the `-g` flag) and, in order to use the truffle command from the command line, I used `./node_modules/.bin/truffle <command>` instead of just `truffle <command>`.
 
   After installing **truffle** it's possible to run `truffle init`, the three folders will be created:
   - `contracts/`: Contains smart contract code.
   - `migrations/`: Contains migrations scripts which will be used be truffle to handle deployment.
-  - `test/`: Contains test scripts truffle-config.js: Contains truffle configurations
-
+  - `test/`: Contains test scripts `truffle-config.js`: Contains truffle configurations
 
 - The contracts from openzeppelin, it means it's needed the run of: `npm install @openzeppelin/contracts`.
   

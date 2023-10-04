@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol"; // NFT's standard
-import "@openzeppelin/contracts/access/Ownable.sol"; // to handle the ownership of the contract
-import "@openzeppelin/contracts/utils/Counters.sol"; // to auto-increment the tokenID
+import "./@openzeppelin/contracts/token/ERC721/ERC721.sol"; // NFT's standard
+import "./@openzeppelin/contracts/access/Ownable.sol"; // to handle the ownership of the contract
+import "./@openzeppelin/contracts/utils/Counters.sol"; // to auto-increment the tokenID
 
 /**
 Contract for the Boss of the Gym, only one Owner can mint these NFTs.

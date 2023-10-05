@@ -78,6 +78,7 @@ class LinkSmartContract extends ChangeNotifier {
   }
 
   Future<void> getDeployedContract() async {
+    // ? is "SmartContract" the name of the smart contract?
     // Telling Web3dart where our contract is declared.
     _contract = DeployedContract(
         ContractAbi.fromJson(_abiCode, "SmartContract"), _contractAddress);

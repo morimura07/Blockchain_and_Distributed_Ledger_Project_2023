@@ -25,11 +25,13 @@ class LinkSmartContract extends ChangeNotifier {
   //it's used to tell Web3dart where the contract is declared
   late DeployedContract _contract;
   //it's the function that is declared in our SmartContract
-  late ContractFunction _fullName;
-  late ContractFunction _setName;
+  late ContractFunction _getName;
+  late ContractFunction _balanceOf;
+  late ContractFunction _safeMint;
 
   //it's used to check the contract state
   bool isLoading = true;
+  
   //it's the name from the smart contract
   String? deployedName;
 
@@ -81,32 +83,59 @@ class LinkSmartContract extends ChangeNotifier {
         ContractAbi.fromJson(_abiCode, "SmartContract"), _contractAddress);
 
     // Extracting the functions, declared in contract.
-    _fullName = _contract.function("FullName");
-    _setName = _contract.function("setName");
+    // _fullName = _contract.function("FullName");
+    _getName = _contract.function("name");
+
+    _balanceOf = _contract.function("balanceOf");
+    _safeMint = _contract.function("safeMint");
+
     getName();
+    // getBalanceOf();
   }
 
   Future<void> getName() async {
-    // Getting the current name declared in the smart contract.
-    var currentName = await _client
-        .call(contract: _contract, function: _fullName, params: []);
-
+    devtools.log("Getting name of the deployed smart contract");
+    var currentName = await _client.call(
+      contract: _contract,
+      function: _getName,
+      params: [],
+    );
+    
     deployedName = currentName[0];
     isLoading = false;
     notifyListeners();
   }
 
-  Future<void> setName(String nameToSet) async {
-    // Setting the name to nameToSet(name defined by user)
-    isLoading = true;
+  Future<void> getBalanceOf() async {
+    // ! manca un parametro
+    devtools.log(
+      "Getting balance of the smart contract",
+      name: runtimeType.toString(),
+    );
+
+    // Getting the current balance declared in the smart contract.
+    var currentBalance = await _client.call(
+      contract: _contract,
+      function: _balanceOf,
+      params: [],
+    );
+
+    deployedName = currentBalance[0];
+    isLoading = false;
     notifyListeners();
-    await _client.sendTransaction(
-        _credentials,
-        Transaction.callContract(
-          contract: _contract,
-          function: _setName,
-          parameters: [nameToSet],
-        ));
-    getName();
   }
+
+  // Future<void> setName(String nameToSet) async {
+  //   // Setting the name to nameToSet(name defined by user)
+  //   isLoading = true;
+  //   notifyListeners();
+  //   await _client.sendTransaction(
+  //       _credentials,
+  //       Transaction.callContract(
+  //         contract: _contract,
+  //         function: _setName,
+  //         parameters: [nameToSet],
+  //       ));
+  //   getName();
+  // }
 }

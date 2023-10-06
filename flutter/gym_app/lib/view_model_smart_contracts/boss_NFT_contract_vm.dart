@@ -7,10 +7,16 @@ import 'package:web_socket_channel/io.dart';
 
 import 'dart:developer' as devtools;
 
-class LinkSmartContract extends ChangeNotifier {
+/// It represent the ViewModel of a contract, in particular, BossNFT contract. \
+/// It's implemented as a ChangeNotifier, it means we can use it as a **state** for
+/// our application.
+class BossNFTcontractVM extends ChangeNotifier {
+  final String nameSmartContract = "BossNFT";
+
   final String _rpcURl = "http://127.0.0.1:7545";
   final String _wsURl = "ws://127.0.0.1:7545/";
 
+  // Private key for the address that is doing the transaction (to sign the transaction)
   final String _privateKey =
       "d7d4f5fad5d583ea959a7cf76919ea47b9827e45acfa764a22a019e5c0efbb4b";
 
@@ -24,6 +30,7 @@ class LinkSmartContract extends ChangeNotifier {
   late Credentials _credentials;
   //it's used to tell Web3dart where the contract is declared
   late DeployedContract _contract;
+
   //it's the function that is declared in our SmartContract
   late ContractFunction _getName;
   late ContractFunction _balanceOf;
@@ -31,22 +38,23 @@ class LinkSmartContract extends ChangeNotifier {
 
   //it's used to check the contract state
   bool isLoading = true;
-  
+
   //it's the name from the smart contract
   String? deployedName;
 
-  LinkSmartContract() {
+  BossNFTcontractVM() {
     initialize();
   }
 
+  /// Establish a connection to the Ethereum RPC node. The socketConnector
+  /// property allows more efficient event streams over websocket instead of
+  /// http-polls. However, the socketConnector property is experimental.
   initialize() async {
-    // establish a connection to the Ethereum RPC node. The socketConnector
-    // property allows more efficient event streams over websocket instead of
-    // http-polls. However, the socketConnector property is experimental.
     devtools.log(
       "Establishing a connection to the Ethereum RPC node",
       name: runtimeType.toString(),
     );
+
     _client = Web3Client(_rpcURl, Client(), socketConnector: () {
       return IOWebSocketChannel.connect(_wsURl).cast<String>();
     });
@@ -78,10 +86,9 @@ class LinkSmartContract extends ChangeNotifier {
   }
 
   Future<void> getDeployedContract() async {
-    // ? is "SmartContract" the name of the smart contract?
     // Telling Web3dart where our contract is declared.
     _contract = DeployedContract(
-        ContractAbi.fromJson(_abiCode, "SmartContract"), _contractAddress);
+        ContractAbi.fromJson(_abiCode, "BossNFT"), _contractAddress);
 
     // Extracting the functions, declared in contract.
     // _fullName = _contract.function("FullName");
@@ -94,20 +101,39 @@ class LinkSmartContract extends ChangeNotifier {
     // getBalanceOf();
   }
 
+  // ______________ Functions get ______________
+
   Future<void> getName() async {
-    devtools.log("Getting name of the deployed smart contract");
+    devtools.log(
+      "Getting name of the deployed smart contract",
+      name: runtimeType.toString(),
+    );
     var currentName = await _client.call(
       contract: _contract,
       function: _getName,
       params: [],
     );
-    
+
     deployedName = currentName[0];
     isLoading = false;
     notifyListeners();
   }
 
-  Future<void> getBalanceOf() async {
+  Future<void> getOwner() async {
+    devtools.log("Getting name of the owner of the deployed smart contract",
+        name: runtimeType.toString());
+    var currentName = await _client.call(
+      contract: _contract,
+      function: _getName,
+      params: [],
+    );
+
+    deployedName = currentName[0];
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<String> getBalanceOf(EthereumAddress address) async {
     // ! manca un parametro
     devtools.log(
       "Getting balance of the smart contract",
@@ -118,25 +144,38 @@ class LinkSmartContract extends ChangeNotifier {
     var currentBalance = await _client.call(
       contract: _contract,
       function: _balanceOf,
-      params: [],
+      params: [address],
     );
 
-    deployedName = currentBalance[0];
+    devtools.log(
+      "Result of the getBlanceOF method ${currentBalance[0]}",
+      name: runtimeType.toString(),
+    );
+
     isLoading = false;
     notifyListeners();
+    return currentBalance[0].toString();
   }
 
-  // Future<void> setName(String nameToSet) async {
-  //   // Setting the name to nameToSet(name defined by user)
-  //   isLoading = true;
-  //   notifyListeners();
-  //   await _client.sendTransaction(
-  //       _credentials,
-  //       Transaction.callContract(
-  //         contract: _contract,
-  //         function: _setName,
-  //         parameters: [nameToSet],
-  //       ));
-  //   getName();
-  // }
+  // ______________ Functions set or mint ______________
+
+  Future<void> safeMint(EthereumAddress address) async {
+    devtools.log(
+      "Minting $nameSmartContract",
+      name: runtimeType.toString(),
+    );
+
+    var res = await _client.call(
+      contract: _contract,
+      function: _safeMint,
+      params: [address],
+    );
+
+    devtools.log(
+      "The result of the minting is $res",
+      name: runtimeType.toString(),
+    );
+    
+    notifyListeners();
+  }
 }

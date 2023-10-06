@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_app/pages/home_page.dart';
-import 'package:gym_app/utils/link_smart_contract.dart';
+import 'package:gym_app/view_model_smart_contracts/boss_NFT_contract_vm.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:developer' as devtools;
@@ -9,10 +9,10 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
-    ChangeNotifierProvider<LinkSmartContract>(
+    ChangeNotifierProvider<BossNFTcontractVM>(
       create: (_) {
         devtools.log("Creating the LinkSmartContract Provider", name: "Main");
-        return LinkSmartContract();
+        return BossNFTcontractVM();
       },
       child: const MyApp(),
     ),

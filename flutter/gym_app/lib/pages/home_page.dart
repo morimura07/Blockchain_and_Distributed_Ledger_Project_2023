@@ -1,6 +1,9 @@
+import 'package:dart_web3/dart_web3.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_app/utils/link_smart_contract.dart';
+import 'package:gym_app/view_model_smart_contracts/boss_NFT_contract_vm.dart';
 import 'package:provider/provider.dart';
+
+import 'dart:developer' as devtools;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -12,17 +15,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+  // Create a text controller and use it to retrieve the current value
+  // of the TextField.
+  final myController = TextEditingController();
+  String ethAddress = "Missing address";
+  String balanceOf = "";
 
-  void _incrementCounter() {
+  void _updateEthAddress(String newString) {
     setState(() {
-      _counter++;
+      ethAddress = newString.isEmpty ? "Missing address" : newString;
+    });
+  }
+
+  void _updateBalanceOf(String newString) {
+    setState(() {
+      balanceOf = newString;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var contractLink = Provider.of<LinkSmartContract>(context);
+    var contractLink = Provider.of<BossNFTcontractVM>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -39,15 +52,47 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Text(
                     '${contractLink.deployedName}',
-                    style: Theme.of(context).textTheme.headline4,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
+                  const SizedBox(height: 30),
+                  FractionallySizedBox(
+                    widthFactor: 0.7,
+                    child: TextField(
+                      maxLines: null,
+                      controller: myController,
+                      onChanged: (inputString) => _updateEthAddress(inputString),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter an Etherium address in Hex',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      String res;
+                      try {
+                        res = await contractLink.getBalanceOf(
+                          EthereumAddress.fromHex(ethAddress),
+                        );
+                      } catch (e) {
+                        devtools.log(
+                          "An exception occureed\n${e.toString()}",
+                          name: runtimeType.toString(),
+                        );
+                        res = "";  
+                      }
+                      _updateBalanceOf(res);
+                    },
+                    icon: const Icon(Icons.account_balance_sharp),
+                    label: const Text("Balance of BossNFT"),
+                  ),
+                  const SizedBox(height: 30),
+                  balanceOf.isEmpty
+                      ? const Text("")
+                      : Text("The Balance of this address is: $balanceOf"),
                 ],
               ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:dart_web3/dart_web3.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gym_app/compontents/simple_form.dart';
-import 'dart:developer' as devtools;
 
 import 'package:gym_app/model/credential_builder.dart';
 
@@ -35,6 +34,7 @@ class _GetCredentialsState extends State<GetCredentials> {
           SimpleForm(
             onSubmit: onSubmit,
             label: "Retrieve credentials from PK",
+            hint: 'Enter an Etherium address in Hex',
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),

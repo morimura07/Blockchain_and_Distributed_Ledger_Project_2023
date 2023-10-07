@@ -12,10 +12,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String title = "Gym";
-  
+  String title = "Get Credentials";
+
   int currentIndex = 0;
-  
+
   List<Widget> pages = [
     const GetCredentials(),
     const BossPage(),
@@ -53,7 +53,14 @@ class _HomePageState extends State<HomePage> {
                 "Go to get credentials",
                 name: runtimeType.toString(),
               );
-              setPage(title: "Credentials", newIndex: 1);
+              setPage(title: "Credentials", newIndex: 0);
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text("BossNFT contract"),
+            onTap: () {
+              setPage(title: "BossNFT", newIndex: 1);
               Navigator.pop(context);
             },
           ),

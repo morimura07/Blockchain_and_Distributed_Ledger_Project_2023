@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'dart:developer' as devtools;
 
 /// It's just a [TextField] with a button to submit.
 class SimpleForm extends StatefulWidget {
 
-  SimpleForm({Key? key, required this.onSubmit, required this.label, this.hint = 'Enter an Etherium address in Hex'}) : super(key: key);
+  const SimpleForm({Key? key, required this.onSubmit, required this.label, required this.hint}) : super(key: key);
  
   final Function onSubmit;
   final String label;
-  String hint;
+  final String hint;
 
   @override
   State<SimpleForm> createState() => _SimpleFormState();

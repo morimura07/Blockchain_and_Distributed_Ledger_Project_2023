@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
@@ -35,12 +36,18 @@ class BossNFTcontractVM extends ChangeNotifier {
   late ContractFunction _getName;
   late ContractFunction _balanceOf;
   late ContractFunction _safeMint;
+  late ContractFunction _getOwner;
 
   //it's used to check the contract state
   bool isLoading = true;
 
   //it's the name from the smart contract
   String? deployedName;
+
+  Future<String?> get address async {
+    var ethAddress = await _credentials.extractAddress();
+    return ethAddress.hex;
+  }
 
   BossNFTcontractVM() {
     initialize();
@@ -82,7 +89,6 @@ class BossNFTcontractVM extends ChangeNotifier {
 
   Future<void> getCredentials() async {
     _credentials = EthPrivateKey.fromHex(_privateKey);
-    // print(_credentials);
   }
 
   Future<void> getDeployedContract() async {
@@ -96,6 +102,7 @@ class BossNFTcontractVM extends ChangeNotifier {
 
     _balanceOf = _contract.function("balanceOf");
     _safeMint = _contract.function("safeMint");
+    _getOwner = _contract.function("owner");
 
     getName();
     // getBalanceOf();
@@ -108,20 +115,6 @@ class BossNFTcontractVM extends ChangeNotifier {
       "Getting name of the deployed smart contract",
       name: runtimeType.toString(),
     );
-    var currentName = await _client.call(
-      contract: _contract,
-      function: _getName,
-      params: [],
-    );
-
-    deployedName = currentName[0];
-    isLoading = false;
-    notifyListeners();
-  }
-
-  Future<void> getOwner() async {
-    devtools.log("Getting name of the owner of the deployed smart contract",
-        name: runtimeType.toString());
     var currentName = await _client.call(
       contract: _contract,
       function: _getName,
@@ -157,25 +150,51 @@ class BossNFTcontractVM extends ChangeNotifier {
     return currentBalance[0].toString();
   }
 
+  Future<String> get owner async {
+    var res = await _client.call(
+      contract: _contract,
+      function: _getOwner,
+      params: [],
+    );
+    // notifyListeners();
+    return res[0].toString();
+  }
+
   // ______________ Functions set or mint ______________
 
-  Future<void> safeMint(EthereumAddress address) async {
+  Future<void> safeMint(EthereumAddress to) async {
     devtools.log(
       "Minting $nameSmartContract",
       name: runtimeType.toString(),
     );
+    if (await owner != await address) {
+      return;
+    }
 
-    var res = await _client.call(
+    // Create a transaction to call the safeMint function,
+    // because to do something that changes the blockchain
+    // we need to use a transaction
+    final transaction = Transaction.callContract(
       contract: _contract,
       function: _safeMint,
-      params: [address],
+      maxGas: 200000, // Adjust the gas limit accordingly
+      // gasPrice: EtherAmount.inWei(BigInt.from(1000000000)), // Adjust the gas price accordingly
+      parameters: [to],
+    );
+
+    // Send the transaction
+    final res = await _client.sendTransaction(
+      _credentials,
+      transaction,
+      chainId: 1337,
+      fetchChainIdFromNetworkId: false,
     );
 
     devtools.log(
-      "The result of the minting is $res",
+      "Called transaction to safeMint.\nThe result is $res.",
       name: runtimeType.toString(),
     );
-    
+
     notifyListeners();
   }
 }

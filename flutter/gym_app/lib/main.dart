@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const HomePage(title: 'Admin Interface'),
+      home: const HomePage(),
     );
   }
 }

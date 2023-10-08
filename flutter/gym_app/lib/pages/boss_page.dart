@@ -1,6 +1,6 @@
 import 'package:dart_web3/dart_web3.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_app/view_model_smart_contracts/boss_NFT_contract_vm.dart';
+import 'package:gym_app/view_model_smart_contracts/boss_NFT_contract_vm%20copy.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:developer' as devtools;
@@ -35,7 +35,7 @@ class _BossPageState extends State<BossPage> {
   @override
   Widget build(BuildContext context) {
     var contractLink = Provider.of<BossNFTcontractVM>(context);
-    
+
     return Center(
         child: contractLink.isLoading
             ? const CircularProgressIndicator()

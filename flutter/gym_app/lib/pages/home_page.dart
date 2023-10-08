@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_app/pages/admin_page.dart';
 import 'package:gym_app/pages/boss_page.dart';
 import 'package:gym_app/pages/get_credentials.dart';
 
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> pages = [
     const GetCredentials(),
     const BossPage(),
+    const AdminPage(),
   ];
 
   void setPage({required String title, required int newIndex}) {
@@ -61,6 +63,13 @@ class _HomePageState extends State<HomePage> {
             title: const Text("BossNFT contract"),
             onTap: () {
               setPage(title: "BossNFT", newIndex: 1);
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text("AdminNFT contract"),
+            onTap: () {
+              setPage(newIndex: 2, title: "AdminNFT");
               Navigator.pop(context);
             },
           ),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gym_app/view_model_smart_contracts/boss_nft_contract_vm.dart';
-import 'package:provider/provider.dart';
+import 'package:gym_app/view_model_smart_contracts/smart_contract_nft.dart';
 
 class MirrorNFT extends StatelessWidget {
-  const MirrorNFT({super.key});
+  const MirrorNFT({super.key, required this.contractNFT});
+  final SmartContractNFT contractNFT;
 
   @override
   Widget build(BuildContext context) {
-    var contractLink = Provider.of<BossNFTcontractVM>(context);
+    // var contractNFT = Provider.of<BossNFTcontractVM>(context);
+
     return Column(
       children: [
         const Text(
@@ -15,12 +16,12 @@ class MirrorNFT extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         Text(
-          '${contractLink.deployedName}',
+          '${contractNFT.deployedName}',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         const Text("and the address we are connected as:"),
         FutureBuilder(
-          future: contractLink.address,
+          future: contractNFT.address,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Text(
@@ -34,7 +35,7 @@ class MirrorNFT extends StatelessWidget {
         ),
         const Text("and the address owner of the contract is:"),
         FutureBuilder(
-          future: contractLink.owner,
+          future: contractNFT.owner,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Text(

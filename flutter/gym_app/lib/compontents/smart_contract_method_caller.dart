@@ -1,12 +1,13 @@
 import 'package:dart_web3/dart_web3.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_app/view_model_smart_contracts/boss_nft_contract_vm.dart';
-import 'package:provider/provider.dart';
+import 'package:gym_app/view_model_smart_contracts/smart_contract_nft.dart';
 
 import 'dart:developer' as devtools;
 
 class SmartContractMethodCaller extends StatefulWidget {
-  const SmartContractMethodCaller({Key? key}) : super(key: key);
+  const SmartContractMethodCaller({Key? key, required this.contractNFT}) : super(key: key);
+
+  final SmartContractNFT contractNFT;
 
   @override
   State<SmartContractMethodCaller> createState() =>
@@ -34,7 +35,7 @@ class _SmartContractMethodCallerState extends State<SmartContractMethodCaller> {
 
   @override
   Widget build(BuildContext context) {
-    var contractLink = Provider.of<BossNFTcontractVM>(context);
+    
 
     return Column(
       children: [
@@ -54,7 +55,7 @@ class _SmartContractMethodCallerState extends State<SmartContractMethodCaller> {
           onPressed: () async {
             String res;
             try {
-              res = await contractLink.getBalanceOf(
+              res = await widget.contractNFT.getBalanceOf(
                 EthereumAddress.fromHex(ethAddress),
               );
             } catch (e) {
@@ -79,10 +80,10 @@ class _SmartContractMethodCallerState extends State<SmartContractMethodCaller> {
         ElevatedButton.icon(
           onPressed: () {
             devtools.log("Button 'safeMint' pressed");
-            contractLink.safeMint(EthereumAddress.fromHex(ethAddress));
+            widget.contractNFT.safeMint(EthereumAddress.fromHex(ethAddress));
           },
           icon: const Icon(Icons.attach_money_rounded),
-          label: Text("Mint a ${contractLink.deployedName} token"),
+          label: Text("Mint a ${widget.contractNFT.deployedName} token"),
         )
       ],
     );

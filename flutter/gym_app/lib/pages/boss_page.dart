@@ -15,8 +15,6 @@ class BossPage extends StatefulWidget {
 }
 
 class _BossPageState extends State<BossPage> {
-  
-
   @override
   Widget build(BuildContext context) {
     // devtools.log("Refresh widget", name: runtimeType.toString());
@@ -34,13 +32,11 @@ class _BossPageState extends State<BossPage> {
                       contractLink.primaryKey = newPrimaryKey;
                     },
                   ),
-                  const MirrorNFT(),
-                  const SmartContractMethodCaller(),
+                  MirrorNFT(contractNFT: contractLink),
+                  SmartContractMethodCaller(contractNFT: contractLink),
                 ],
               ),
             ),
     );
   }
-
-
 }

@@ -18,8 +18,17 @@ class BossNFTcontractVM extends ChangeNotifier {
   final String _wsURl = "ws://127.0.0.1:7545/";
 
   // Private key for the address that is doing the transaction (to sign the transaction)
-  final String _privateKey =
-      "d7d4f5fad5d583ea959a7cf76919ea47b9827e45acfa764a22a019e5c0efbb4b";
+  String _privateKey =
+      "0xa5a5750c5da4464b3a1c58910bb6bfaa57fe150cea54d70084a59e0645bdb1a9";
+
+  set credentials(String newPk) {
+    devtools.log(
+      "Setting credentials with proper setter",
+      name: runtimeType.toString(),
+    );
+    _privateKey = newPk;
+    _setCredentials();
+  }
 
   //it's used to establish a connection to the Ethereum RPC node with the help of WebSocket
   late Web3Client _client;
@@ -67,7 +76,7 @@ class BossNFTcontractVM extends ChangeNotifier {
     });
 
     await getAbi();
-    await getCredentials();
+    await _setCredentials();
     await getDeployedContract();
 
     devtools.log(
@@ -87,8 +96,9 @@ class BossNFTcontractVM extends ChangeNotifier {
         EthereumAddress.fromHex(jsonAbi["networks"]["5777"]["address"]);
   }
 
-  Future<void> getCredentials() async {
+  Future<void> _setCredentials() async {
     _credentials = EthPrivateKey.fromHex(_privateKey);
+    notifyListeners();
   }
 
   Future<void> getDeployedContract() async {

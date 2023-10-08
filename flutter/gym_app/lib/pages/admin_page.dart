@@ -1,6 +1,6 @@
 import 'package:dart_web3/dart_web3.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_app/view_model_smart_contracts/admin_NFT_contract_vm.dart';
+import 'package:gym_app/view_model_smart_contracts/admin_nft_contract_vm.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:developer' as devtools;
@@ -146,7 +146,7 @@ class _AdminPageState extends State<AdminPage> {
                     },
                     icon: const Icon(Icons.attach_money_rounded),
                     label:
-                        Text("Mint a ${contractLink.nameSmartContract} token"),
+                        Text("Mint a ${contractLink.deployedName} token"),
                   ),
                 ],
               ),

@@ -1,7 +1,7 @@
 import 'package:dart_web3/dart_web3.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_app/compontents/form_edit_eth_address.dart';
-import 'package:gym_app/view_model_smart_contracts/boss_NFT_contract_vm%20copy.dart';
+import 'package:gym_app/view_model_smart_contracts/boss_nft_contract_vm.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:developer' as devtools;
@@ -45,7 +45,7 @@ class _BossPageState extends State<BossPage> {
                 children: [
                   FormEditEthAddress(
                     setAddress: (newPrimaryKey) {
-                      contractLink.credentials = newPrimaryKey;
+                      contractLink.primaryKey = newPrimaryKey;
                     },
                   ),
                   const Text(
@@ -133,7 +133,7 @@ class _BossPageState extends State<BossPage> {
                       },
                       icon: const Icon(Icons.attach_money_rounded),
                       label: Text(
-                          "Mint a ${contractLink.nameSmartContract} token"))
+                          "Mint a ${contractLink.deployedName} token"))
                 ],
               ),
             ),

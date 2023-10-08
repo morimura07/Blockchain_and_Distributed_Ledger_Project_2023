@@ -3,7 +3,7 @@ import 'package:gym_app/view_model_smart_contracts/smart_contract_link.dart';
 
 import 'dart:developer' as devtools;
 
-class SmartContractNFT extends SmartContractLink {
+abstract class SmartContractNFT extends SmartContractLink {
   // List of the classic functions that we need as NFT
   late ContractFunction _getName;
   late ContractFunction _balanceOf;

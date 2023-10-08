@@ -19,7 +19,7 @@ class AdminNFTcontractVM extends ChangeNotifier {
 
   // Private key for the address that is doing the transaction (to sign the transaction)
   final String _privateKey =
-      "0xae8655a4b721f9700a86f5410e53b99aabb2bcaa75580e811c7c6cb157abd4b7";
+      "0x57f5a7d63580a45fc965b5524d5b3ea48be91bd7abb315dd62b2fc944fb93607";
 
   //it's used to establish a connection to the Ethereum RPC node with the help of WebSocket
   late Web3Client _client;
@@ -126,7 +126,6 @@ class AdminNFTcontractVM extends ChangeNotifier {
   }
 
   Future<String> getBalanceOf(EthereumAddress address) async {
-    // ! manca un parametro
     devtools.log(
       "Getting balance of the smart contract",
       name: runtimeType.toString(),
@@ -161,14 +160,16 @@ class AdminNFTcontractVM extends ChangeNotifier {
 
   // ______________ Functions set or mint ______________
 
-  Future<void> safeMint(EthereumAddress to) async {
+  Future<String?> safeMint(EthereumAddress to) async {
     devtools.log(
-      "Minting $nameSmartContract",
+      "Minting $deployedName",
       name: runtimeType.toString(),
     );
-    if (await owner != await address) {
-      return;
-    }
+
+    // if (await owner != await address) {
+    //   devtools.log(message)
+    //   return;
+    // }
 
     // Create a transaction to call the safeMint function,
     // because to do something that changes the blockchain
@@ -180,20 +181,28 @@ class AdminNFTcontractVM extends ChangeNotifier {
       // gasPrice: EtherAmount.inWei(BigInt.from(1000000000)), // Adjust the gas price accordingly
       parameters: [to],
     );
+    try {
+      // Send the transaction
+      final res = await _client.sendTransaction(
+        _credentials,
+        transaction,
+        chainId: 1337,
+        fetchChainIdFromNetworkId: false,
+      );
 
-    // Send the transaction
-    final res = await _client.sendTransaction(
-      _credentials,
-      transaction,
-      chainId: 1337,
-      fetchChainIdFromNetworkId: false,
-    );
+      devtools.log(
+        "Called transaction to safeMint.\nThe result is $res.",
+        name: runtimeType.toString(),
+      );
 
-    devtools.log(
-      "Called transaction to safeMint.\nThe result is $res.",
-      name: runtimeType.toString(),
-    );
-
-    notifyListeners();
+      return "Balance updated";
+    } catch (e) {
+      devtools.log(
+        "An exception occurred: ${e.toString()}",
+        name: runtimeType.toString(),
+      );
+      notifyListeners();
+      return "Exception occurred";
+    }
   }
 }

@@ -1,0 +1,6 @@
+# ignoring node modules from `npm` command
+node_modules
+
+# ignoring package-lock.json and package.json
+package.json
+package-lock.json

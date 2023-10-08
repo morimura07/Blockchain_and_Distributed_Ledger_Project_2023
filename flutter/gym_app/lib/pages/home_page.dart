@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_app/pages/admin_page.dart';
 import 'package:gym_app/pages/boss_page.dart';
-import 'package:gym_app/pages/get_credentials.dart';
+import 'package:gym_app/pages/credentials_page.dart';
 
 import 'dart:developer' as devtools;
 
@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
   List<Widget> pages = [
-    const GetCredentials(),
+    const CredentialsPage(),
     const BossPage(),
     const AdminPage(),
   ];

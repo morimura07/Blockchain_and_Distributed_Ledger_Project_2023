@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_app/pages/home_page.dart';
-import 'package:gym_app/view_model_smart_contracts/admin_NFT_contract_vm.dart';
-import 'package:gym_app/view_model_smart_contracts/boss_NFT_contract_vm%20copy.dart';
+import 'package:gym_app/view_model_smart_contracts/admin_nft_contract_vm.dart';
+import 'package:gym_app/view_model_smart_contracts/boss_nft_contract_vm.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:developer' as devtools;

@@ -6,7 +6,7 @@ class SimpleForm extends StatefulWidget {
 
   const SimpleForm({Key? key, required this.onSubmit, required this.label, required this.hint}) : super(key: key);
  
-  final Function onSubmit;
+  final Function(String textFieldValue) onSubmit;
   final String label;
   final String hint;
 
@@ -27,6 +27,7 @@ class _SimpleFormState extends State<SimpleForm> {
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             hintText: widget.hint,
+            
           ),
         ),
         ElevatedButton.icon(

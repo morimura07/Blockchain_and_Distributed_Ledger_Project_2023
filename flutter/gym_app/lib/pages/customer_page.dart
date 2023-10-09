@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:gym_app/compontents/smart_contract_method_caller.dart';
 import 'package:gym_app/compontents/form_edit_eth_address.dart';
 import 'package:gym_app/compontents/mirror_nft.dart';
-import 'package:gym_app/view_model_smart_contracts/boss_nft_contract_vm.dart';
+import 'package:gym_app/compontents/smart_contract_method_caller.dart';
+import 'package:gym_app/view_model_smart_contracts/customer_nft_contract_vm.dart';
 import 'package:provider/provider.dart';
 
-// import 'dart:developer' as devtools;
-
-class BossPage extends StatelessWidget {
-  const BossPage({Key? key}) : super(key: key);
+class CustomerPage extends StatelessWidget {
+  const CustomerPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // devtools.log("Refresh widget", name: runtimeType.toString());
-    var contractLink = Provider.of<BossNFTcontractVM>(context);
+    var contractLink = Provider.of<CustomerNFTcontractVM>(context);
 
     return Center(
       child: contractLink.isLoading

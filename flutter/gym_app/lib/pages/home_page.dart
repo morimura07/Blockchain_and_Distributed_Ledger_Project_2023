@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gym_app/pages/admin_page.dart';
 import 'package:gym_app/pages/boss_page.dart';
-import 'package:gym_app/pages/get_credentials.dart';
+import 'package:gym_app/pages/credentials_page.dart';
 
 import 'dart:developer' as devtools;
+
+import 'package:gym_app/pages/customer_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,13 +15,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String title = "Gym";
-  
+  String title = "Get Credentials";
+
   int currentIndex = 0;
-  
+
   List<Widget> pages = [
-    const GetCredentials(),
+    const CredentialsPage(),
     const BossPage(),
+    const AdminPage(),
+    const CustomerPage(),
   ];
 
   void setPage({required String title, required int newIndex}) {
@@ -35,29 +40,52 @@ class _HomePageState extends State<HomePage> {
         title: Text(title),
       ),
       endDrawer: Drawer(
-        child: ListView(children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blueGrey),
-            child: Text(
-              "The gym of the future",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
+        child: ListView(
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blueGrey),
+              child: Text(
+                "The gym of the future",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
               ),
             ),
-          ),
-          ListTile(
-            title: const Text("Get credentials"),
-            onTap: () {
-              devtools.log(
-                "Go to get credentials",
-                name: runtimeType.toString(),
-              );
-              setPage(title: "Credentials", newIndex: 1);
-              Navigator.pop(context);
-            },
-          ),
-        ]),
+            ListTile(
+              title: const Text("Get credentials"),
+              onTap: () {
+                devtools.log(
+                  "Go to get credentials",
+                  name: runtimeType.toString(),
+                );
+                setPage(title: "Credentials", newIndex: 0);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text("BossNFT contract"),
+              onTap: () {
+                setPage(title: "BossNFT", newIndex: 1);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text("AdminNFT contract"),
+              onTap: () {
+                setPage(newIndex: 2, title: "AdminNFT");
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text("CustomerNFT contract"),
+              onTap: () {
+                setPage(newIndex: 3, title: "CustomerNFT");
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: pages[currentIndex],
     );

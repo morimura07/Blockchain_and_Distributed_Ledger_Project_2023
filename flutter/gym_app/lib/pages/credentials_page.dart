@@ -2,18 +2,17 @@ import 'package:dart_web3/dart_web3.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gym_app/compontents/simple_form.dart';
-import 'dart:developer' as devtools;
 
 import 'package:gym_app/model/credential_builder.dart';
 
-class GetCredentials extends StatefulWidget {
-  const GetCredentials({Key? key}) : super(key: key);
+class CredentialsPage extends StatefulWidget {
+  const CredentialsPage({Key? key}) : super(key: key);
 
   @override
-  State<GetCredentials> createState() => _GetCredentialsState();
+  State<CredentialsPage> createState() => _CredentialsPageState();
 }
 
-class _GetCredentialsState extends State<GetCredentials> {
+class _CredentialsPageState extends State<CredentialsPage> {
   Credentials? _credentials;
 
   void onSubmit(String strPrivateKey) {
@@ -25,7 +24,6 @@ class _GetCredentialsState extends State<GetCredentials> {
 
   @override
   Widget build(BuildContext context) {
-    // var contractLink = Provider.of<BossNFTcontractVM>(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -35,6 +33,7 @@ class _GetCredentialsState extends State<GetCredentials> {
           SimpleForm(
             onSubmit: onSubmit,
             label: "Retrieve credentials from PK",
+            hint: 'Enter an Etherium address in Hex',
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_app/pages/home_page.dart';
 import 'package:gym_app/view_model_smart_contracts/admin_nft_contract_vm.dart';
 import 'package:gym_app/view_model_smart_contracts/boss_nft_contract_vm.dart';
+import 'package:gym_app/view_model_smart_contracts/customer_nft_contract_vm.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:developer' as devtools;
@@ -25,6 +26,15 @@ void main() {
               name: "Main",
             );
             return AdminNFTcontractVM();
+          },
+        ),
+        ChangeNotifierProvider<CustomerNFTcontractVM>(
+          create: (_) {
+            devtools.log(
+              "Creatin the CustomerNFT Provider",
+              name: "Main",
+            );
+            return CustomerNFTcontractVM();
           },
         ),
       ],

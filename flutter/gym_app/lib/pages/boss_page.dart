@@ -7,14 +7,9 @@ import 'package:provider/provider.dart';
 
 // import 'dart:developer' as devtools;
 
-class BossPage extends StatefulWidget {
+class BossPage extends StatelessWidget {
   const BossPage({Key? key}) : super(key: key);
 
-  @override
-  State<BossPage> createState() => _BossPageState();
-}
-
-class _BossPageState extends State<BossPage> {
   @override
   Widget build(BuildContext context) {
     // devtools.log("Refresh widget", name: runtimeType.toString());

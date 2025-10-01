@@ -72,6 +72,11 @@ Traditional gym subscriptions are **rigid**:
 
 ---
 
+## 🏆 Evaluation
+This project was awarded the maximum grade of **30**.
+
+---
+
 ## 👥 Contributors  
 - **Andrea Prati** –  Smart contract development for System 1, mobile application.  
-- **Simone Buranti** – Business use case design, technical system design and implementation for System 2.  
+- **Simone Buranti** – Business use case design, technical system design and implementation for System 2.

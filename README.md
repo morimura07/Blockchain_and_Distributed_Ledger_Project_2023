@@ -1,5 +1,3 @@
----
-
 # NFT-Based Gym Subscription Platform
 
 ## Overview
